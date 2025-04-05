@@ -1,0 +1,57 @@
+# === Python cache ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.log
+
+# === Virtual environments ===
+venv/
+env/
+.venv/
+
+# === OS generated files ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Streamlit ===
+.streamlit/
+
+# === Audio files and chunks ===
+assets/temp_chunks/
+assets/*.wav
+assets/*.mp3
+assets/*.ogg
+
+# === Transcripts and output ===
+assets/transcript.txt
+assets/combined.wav
+
+# === Model files and downloads ===
+models/
+offload/
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+
+# === Hugging Face token or cache ===
+token.txt
+*.jsonl
+*.cache/
+huggingface/
+.huggingface/
+
+# === Jupyter notebooks ===
+.ipynb_checkpoints/
+
+# === IDE configs ===
+.vscode/
+.idea/
+
+# === LFS metadata (if you use Git LFS) ===
+*.lfs*
+
+# === Env variables ===
+.env

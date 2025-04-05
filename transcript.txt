@@ -1,0 +1,11 @@
+[Speaker 1] Good morning, everyone. Let’s start with the product update.
+[Speaker 2] Sure. The development team finished the login feature yesterday.
+[Speaker 3] That’s great. I’ll review it and send feedback by tomorrow.
+[Speaker 1] Thanks. Next, we need to plan the launch event.
+[Speaker 2] I can coordinate with marketing and draft a plan.
+[Speaker 3] Please make sure the timeline is shared with the entire team.
+[Speaker 1] Agreed. Also, let’s not forget the investor report due Friday.
+[Speaker 2] I’ll take care of that.
+[Speaker 3] Can you also include the latest user growth metrics?
+[Speaker 2] Absolutely. I’ll include them in the report.
+[Speaker 1] Perfect. Let’s meet again next Tuesday to track progress.

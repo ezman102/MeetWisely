@@ -3,12 +3,16 @@ import sqlite3
 import streamlit as st
 
 from modules.translator import translate_text
+from modules.stream_transcriber import stream_transcribe_live
 
 from modules.summarizer import generate_summary
+
+# from modules.summarizer_knkarthickAMI import generate_summary_knkarthickAMI
 from modules.ds_action_items import extract_action_items_with_deepseek
 
 default_language = "en"
 
+# language that support translation
 supported_languages = {
     "English": "en",
     "French": "fr",
@@ -146,7 +150,6 @@ def get_chatrooms_status(chatroom_name):
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
     c.execute("SELECT owner, is_closed FROM chatrooms WHERE name = ?", (chatroom_name,))
-    # chatrooms = [row[0] for row in c.fetchall()]
     chatrooms = c.fetchone()
     conn.close()
     return chatrooms
@@ -311,6 +314,7 @@ def get_chatroom_summary(chatroom_name):
 
 
 # Function to fetch messages periodically
+# only message after current_time_stamp will be selected
 def get_messages_periodically(chatroom_name, current_time_stamp):
     conn = sqlite3.connect("chatroom.db")
     c = conn.cursor()
@@ -337,8 +341,9 @@ def show_message(chat_message):
         st.write(message)
 
 
+# format message to a specific format - pass to deepseek for extract action item
 def format_message(user_name, message):
-    return "[" + user_name + "]" + message + "\n"
+    return "[Speaker " + user_name + "]" + message + "\n"
 
 
 # Initialize the database
@@ -348,6 +353,7 @@ init_db()
 st.title("Chatroom App")
 st.sidebar.title("📂 Menu")
 
+# basic fucntion
 menu = st.sidebar.selectbox("", ["Register", "Login", "Chatroom"])
 
 if "logged_in_user" not in st.session_state:
@@ -390,12 +396,12 @@ elif menu == "Login":
             st.error("Invalid username or password.")
 
 elif menu == "Chatroom":
-    # st.session_state.keep_refresh_msg = False
-    # current_time_stamp = get_current_timestamp()
+    # only logged user can use
     if st.session_state["logged_in_user"]:
         st.subheader(f"Welcome, {st.session_state['logged_in_user']}!")
         chat_option = st.radio("Choose an option", ["Create Chatroom", "Join Chatroom"])
 
+        # create chat room
         if chat_option == "Create Chatroom":
             st.session_state.is_joined_chatroom = False
             st.session_state.keep_refresh_msg = False
@@ -404,12 +410,10 @@ elif menu == "Chatroom":
             if st.button("Create"):
                 if create_chatroom(room_name, st.session_state["logged_in_user"]):
                     st.success(f"Chatroom '{room_name}' created!")
-                    # current_time_stamp = get_current_timestamp()
                 else:
                     st.error("Chatroom already exists.")
-
         elif chat_option == "Join Chatroom":
-            # st.session_state.keep_refresh_msg = False
+
             rooms = get_chatrooms()
             room_name = st.selectbox("Select Chatroom", rooms)
             st.session_state.chatrooms_is_active = True
@@ -423,15 +427,14 @@ elif menu == "Chatroom":
             if room_name and st.session_state.is_joined_chatroom:
                 chatrooms_status = get_chatrooms_status(room_name)
                 chatrooms_owner = chatrooms_status["owner"]
-                # print("debyg", chatrooms_status["is_closed"])
                 st.session_state.chatrooms_is_active = (
                     chatrooms_status["is_closed"] == False
                 )
-                # print(chatrooms_owner, st.session_state["logged_in_user"])
                 st.subheader(f"Chatroom: {room_name}")
                 members = get_chatroom_members(room_name)
                 st.write("Users joined:", ", ".join(members))
 
+                # owner of the chatroom can end meeting, generate summary, and, extract action item
                 if chatrooms_owner == st.session_state["logged_in_user"]:
                     if st.sidebar.button("▶️ End Meeting"):
                         message = "End Meeting"
@@ -453,9 +456,6 @@ elif menu == "Chatroom":
                         )
                         end_chatroom(room_name)
                         st.session_state.chatrooms_is_active = False
-                        # if st.sidebar.button("End meeting"):
-                        # update meeting status to "end"
-                        # print(st.session_state["logged_in_user"])
                     if st.session_state.chatrooms_is_active == False:
                         # user can
                         # 1 "Summarize Transcript",
@@ -483,16 +483,16 @@ elif menu == "Chatroom":
                                     ) in messages:
                                         text += format_message(user, translated_msg)
                                     # st.session_state.is_loaded_chathistory = True
+
                                     # text = "Hello123"
-                                    print("Debug: summary content- ", text)
+                                    # summary = text
                                     summary = generate_summary(text)
+                                    # summary = generate_summary_knkarthickAMI(text)
+                                    print("Debug: summary content- ", text)
+
                                 update_chatroom_summary(
                                     room_name, default_language, summary
                                 )
-                                # st.subheader("📝 Summary")
-                                # st.markdown(summary)
-
-                            # Add your code for summarizing the meeting here
                         elif app_mode == "Action Items (DeepSeek)":
                             if st.sidebar.button("🐋 DeepSeek Action Item Extraction"):
                                 with st.spinner(
@@ -511,14 +511,11 @@ elif menu == "Chatroom":
                                         text += format_message(user, translated_msg)
                                     # st.session_state.is_loaded_chathistory = True
                                     # text = "Hello123"
-                                    full_text = extract_action_items_with_deepseek(text)
                                     # full_text = "Hello456"
+                                    full_text = extract_action_items_with_deepseek(text)
                                 update_chatroom_action_item(
                                     room_name, default_language, full_text
                                 )
-                                # st.subheader("📋 Action Items")
-                                # st.markdown(full_text)
-                            # Add your code for DeepSeek-related actions here
 
                 chatroom_summary = get_chatroom_summary(room_name)
                 print(chatroom_summary)
@@ -560,10 +557,6 @@ elif menu == "Chatroom":
 
                 st.subheader("Chat Messages")
                 # load chat history
-                # unknow why: A create room
-                # B join, and send message -> for B: always reload history
-                # if st.session_state.is_loaded_chathistory == False:
-                print("debug361", st.session_state.keep_refresh_msg)
                 if st.session_state.chatrooms_is_active == False:
                     show_message(st.session_state.messages)
                 if st.session_state.keep_refresh_msg == False:
@@ -591,29 +584,46 @@ elif menu == "Chatroom":
                         st.session_state.messages.append(
                             f"{timestamp} - {user}: {display_msg}"
                         )
-                        # st.write(f"{timestamp} - {user}: {display_msg}")
-                        print(
-                            "debug",
-                            timestamp,
-                            user,
-                            display_msg,
-                            st.session_state.is_loaded_chathistory,
-                        )
                         st.session_state.current_time_stamp = timestamp
-                        # st.session_state.is_loaded_chathistory = True
                     show_message(st.session_state.messages)
 
                 st.session_state.keep_refresh_msg = True
                 # if chatroom doesn't closed by owner, user can send message
                 if st.session_state.chatrooms_is_active:
+                    """
+                    if st.sidebar.button("▶️ Start Transcription"):
+                        st.session_state.is_recording = True
+                        st.session_state.transcript = []
+
+                    if st.sidebar.button("🛑 Stop Transcription, and send"):
+                        st.session_state.is_recording = False
+
+                    if st.session_state.is_recording:
+                        st.sidebar.info("Recording started. Speak into your mic...")
+                        for labeled_lines in stream_transcribe_live():
+                            if not st.session_state.is_recording:
+                                break
+                            st.session_state.transcript.extend(labeled_lines)
+
+                        st.sidebar.success("Recording stopped.")
+
+                    if st.session_state.transcript:
+                        add_message(
+                            room_name,
+                            st.session_state["logged_in_user"],
+                            message,
+                            st.session_state.user_language_code,
+                            st.session_state.transcript,
+                            default_language,
+                        )
+                        st.session_state.transcript = []
+                    """
                     message = st.sidebar.text_input("Send Message")
                     translated_message = ""
 
                     if st.sidebar.button("Send"):
                         trim_msg = message.strip()
-                        # st.session_state.keep_refresh_msg = False
                         if trim_msg != "":
-                            # print("is not empty")
                             if st.session_state.user_language_code == default_language:
                                 translated_message = message
                             else:
@@ -640,15 +650,7 @@ elif menu == "Chatroom":
                                 default_language,
                             )
                             show_message(st.session_state.messages)
-                        # st.session_state.keep_refresh_msg = True
-                    print(
-                        "current_time_stamp",
-                        st.session_state.current_time_stamp,
-                        st.session_state.keep_refresh_msg,
-                    )
                     while st.session_state.keep_refresh_msg:
-                        # debug usage
-                        # print(st.session_state.user_language_code)
                         have_new_message = False
                         messages = get_messages_periodically(
                             room_name, st.session_state.current_time_stamp

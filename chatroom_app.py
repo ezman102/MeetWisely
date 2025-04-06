@@ -435,11 +435,14 @@ elif menu == "Chatroom":
                 if chatrooms_owner == st.session_state["logged_in_user"]:
                     if st.sidebar.button("▶️ End Meeting"):
                         message = "End Meeting"
-                        translated_msg = translate_text(
-                            message,
-                            src_lang=default_language,
-                            tgt_lang=st.session_state.user_language_code,
-                        )
+                        if default_language != st.session_state.user_language_code:
+                            translated_msg = translate_text(
+                                message,
+                                src_lang=default_language,
+                                tgt_lang=st.session_state.user_language_code,
+                            )
+                        else:
+                            translated_msg = message
                         add_message(
                             room_name,
                             st.session_state["logged_in_user"],

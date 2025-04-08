@@ -373,15 +373,25 @@ def get_recognize_google_language_code(text):
     return recognize_google_language_mapping.get(text, default_language)
 
 
+def get_key_from_value(mapping, value):
+    for key, val in mapping.items():
+        if val == value:
+            return key
+    return None
+
+
 # Function to process audio in real time
-def listen_in_background(language):
+def listen_in_background():
     with sr.Microphone() as source:
         recognizer.adjust_for_ambient_noise(source)
         while st.session_state.recording:
             try:
                 audio_data = recognizer.listen(source, timeout=1, phrase_time_limit=5)
                 text = recognizer.recognize_google(
-                    audio_data, get_recognize_google_language_code(language)
+                    audio_data,
+                    get_recognize_google_language_code(
+                        st.session_state.user_language_code
+                    ),
                 )
                 # Append the recognized text to session state
                 st.session_state.captured_text += text + " "
@@ -475,7 +485,12 @@ elif menu == "Chatroom":
                 st.session_state.chatrooms_is_active = (
                     chatrooms_status["is_closed"] == False
                 )
-                st.subheader(f"Chatroom: {room_name}")
+                st.subheader(
+                    f"Chatroom: {room_name} ({get_key_from_value(st.session_state.user_language_code)})"
+                )
+                st.write(
+                    f"Language: {get_key_from_value(supported_languages, st.session_state.user_language_code)}"
+                )
                 members = get_chatroom_members(room_name)
                 st.write("Users joined:", ", ".join(members))
 

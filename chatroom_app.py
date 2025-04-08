@@ -664,8 +664,6 @@ elif menu == "Chatroom":
                         translated_message = ""
                         st.session_state.recording = False
                         time.sleep(1)  # Allow the thread to finish properly
-                        st.success("Recording stopped.")
-                        st.write("**Captured Text:**")
                         captured_text = st.session_state.captured_text
                         # st.write(st.session_state.captured_text)
                         if st.session_state.user_language_code == default_language:

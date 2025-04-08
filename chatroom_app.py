@@ -485,9 +485,7 @@ elif menu == "Chatroom":
                 st.session_state.chatrooms_is_active = (
                     chatrooms_status["is_closed"] == False
                 )
-                st.subheader(
-                    f"Chatroom: {room_name} ({get_key_from_value(st.session_state.user_language_code)})"
-                )
+                st.subheader(f"Chatroom: {room_name}")
                 st.write(
                     f"Language: {get_key_from_value(supported_languages, st.session_state.user_language_code)}"
                 )

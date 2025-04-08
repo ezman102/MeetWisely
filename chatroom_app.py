@@ -1,13 +1,15 @@
 import time
 import sqlite3
 import streamlit as st
+import speech_recognition as sr
+import threading
 
 from modules.translator import translate_text
+
 from modules.stream_transcriber import stream_transcribe_live
 
-from modules.summarizer import generate_summary
-
-# from modules.summarizer_knkarthickAMI import generate_summary_knkarthickAMI
+# from modules.summarizer import generate_summary
+from modules.summarizer_knkarthickAMI import generate_summary_knkarthickAMI
 from modules.ds_action_items import extract_action_items_with_deepseek
 
 default_language = "en"
@@ -21,6 +23,17 @@ supported_languages = {
     "Arabic": "ar",
     "Hindi": "hi",
     "Chinese (Simplified)": "zh",
+}
+
+# Mapping of text content to language codes
+recognize_google_language_mapping = {
+    "en": "en-US",
+    "fr": "fr-FR",
+    "de": "de-DE",
+    "es": "es-ES",
+    "ar": "ar-SA",
+    "hi": "hi-IN",
+    "zh": "zh-CN",
 }
 
 
@@ -346,6 +359,38 @@ def format_message(user_name, message):
     return "[Speaker " + user_name + "]" + message + "\n"
 
 
+# Initialize recognizer
+recognizer = sr.Recognizer()
+
+if "recording" not in st.session_state:
+    st.session_state.recording = False
+if "captured_text" not in st.session_state:
+    st.session_state.captured_text = ""
+
+
+# Function to get the corresponding language code
+def get_recognize_google_language_code(text):
+    return recognize_google_language_mapping.get(text, default_language)
+
+
+# Function to process audio in real time
+def listen_in_background(language):
+    with sr.Microphone() as source:
+        recognizer.adjust_for_ambient_noise(source)
+        while st.session_state.recording:
+            try:
+                audio_data = recognizer.listen(source, timeout=1, phrase_time_limit=5)
+                text = recognizer.recognize_google(
+                    audio_data, get_recognize_google_language_code(language)
+                )
+                # Append the recognized text to session state
+                st.session_state.captured_text += text + " "
+            except sr.UnknownValueError:
+                st.warning("Listening... (could not understand)")
+            except Exception as e:
+                st.error(f"Error: {e}")
+
+
 # Initialize the database
 init_db()
 
@@ -486,8 +531,8 @@ elif menu == "Chatroom":
 
                                     # text = "Hello123"
                                     # summary = text
-                                    summary = generate_summary(text)
-                                    # summary = generate_summary_knkarthickAMI(text)
+                                    # summary = generate_summary(text)
+                                    summary = generate_summary_knkarthickAMI(text)
                                     print("Debug: summary content- ", text)
 
                                 update_chatroom_summary(
@@ -590,34 +635,43 @@ elif menu == "Chatroom":
                 st.session_state.keep_refresh_msg = True
                 # if chatroom doesn't closed by owner, user can send message
                 if st.session_state.chatrooms_is_active:
-                    """
-                    if st.sidebar.button("▶️ Start Transcription"):
-                        st.session_state.is_recording = True
-                        st.session_state.transcript = []
+                    start = st.sidebar.button("▶️ Start Transcription")
+                    stop = st.sidebar.button("🛑 Stop Transcription, and Send")
 
-                    if st.sidebar.button("🛑 Stop Transcription, and send"):
-                        st.session_state.is_recording = False
+                    # Start recording
+                    if start:
+                        st.session_state.recording = True
+                        st.session_state.captured_text = (
+                            ""  # Clear previous session text
+                        )
+                        threading.Thread(target=listen_in_background).start()
 
-                    if st.session_state.is_recording:
-                        st.sidebar.info("Recording started. Speak into your mic...")
-                        for labeled_lines in stream_transcribe_live():
-                            if not st.session_state.is_recording:
-                                break
-                            st.session_state.transcript.extend(labeled_lines)
-
-                        st.sidebar.success("Recording stopped.")
-
-                    if st.session_state.transcript:
+                    # Stop recording
+                    if stop:
+                        translated_message = ""
+                        st.session_state.recording = False
+                        time.sleep(1)  # Allow the thread to finish properly
+                        st.success("Recording stopped.")
+                        st.write("**Captured Text:**")
+                        captured_text = st.session_state.captured_text
+                        # st.write(st.session_state.captured_text)
+                        if st.session_state.user_language_code == default_language:
+                            translated_message = captured_text
+                        else:
+                            translated_message = translate_text(
+                                captured_text,
+                                src_lang=st.session_state.user_language_code,
+                                tgt_lang=default_language,
+                            )
                         add_message(
                             room_name,
                             st.session_state["logged_in_user"],
-                            message,
+                            captured_text,
                             st.session_state.user_language_code,
-                            st.session_state.transcript,
+                            translated_message,
                             default_language,
                         )
-                        st.session_state.transcript = []
-                    """
+
                     message = st.sidebar.text_input("Send Message")
                     translated_message = ""
 

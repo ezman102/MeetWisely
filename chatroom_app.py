@@ -358,6 +358,14 @@ def show_message(chat_message):
 def format_message(user_name, message):
     return "[Speaker " + user_name + "]" + message + "\n"
 
+def start_recording():
+    st.session_state.recording = True
+    st.session_state.captured_text = ""
+    listen_in_background(st.session_state.user_language_code)
+
+def stop_recording():
+    st.session_state.recording = False
+
 
 # Initialize recognizer
 recognizer = sr.Recognizer()
@@ -381,22 +389,22 @@ def get_key_from_value(mapping, value):
 
 
 # Function to process audio in real time
-def listen_in_background():
+def listen_in_background(language_code):
+    recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         recognizer.adjust_for_ambient_noise(source)
         while st.session_state.recording:
             try:
-                audio_data = recognizer.listen(source, timeout=1, phrase_time_limit=5)
-                text = recognizer.recognize_google(
-                    audio_data,
-                    get_recognize_google_language_code(
-                        st.session_state.user_language_code
-                    ),
-                )
-                # Append the recognized text to session state
+                audio_data = recognizer.listen(source, timeout=5, phrase_time_limit=10)
+                print("Debug-selected language", get_recognize_google_language_code(language_code))
+                text = recognizer.recognize_google(audio_data, language=get_recognize_google_language_code(language_code))
                 st.session_state.captured_text += text + " "
+                #"en-US"
+                print("Debug-listen_in_background", text)
             except sr.UnknownValueError:
-                st.warning("Listening... (could not understand)")
+                st.warning("Listening... (Could not understand)")
+            except sr.RequestError:
+                st.error("Error: Unable to reach Google Speech Recognition API")
             except Exception as e:
                 st.error(f"Error: {e}")
 
@@ -648,40 +656,32 @@ elif menu == "Chatroom":
                 st.session_state.keep_refresh_msg = True
                 # if chatroom doesn't closed by owner, user can send message
                 if st.session_state.chatrooms_is_active:
-                    start = st.sidebar.button("▶️ Start Transcription")
-                    stop = st.sidebar.button("🛑 Stop Transcription, and Send")
+                    st.sidebar.button("▶️ Start Transcription", on_click=start_recording)
+                    st.sidebar.button("🛑 Stop Transcription", on_click=stop_recording)
 
-                    # Start recording
-                    if start:
-                        st.session_state.recording = True
-                        st.session_state.captured_text = (
-                            ""  # Clear previous session text
-                        )
-                        threading.Thread(target=listen_in_background).start()
-
-                    # Stop recording
-                    if stop:
-                        translated_message = ""
-                        st.session_state.recording = False
-                        time.sleep(1)  # Allow the thread to finish properly
-                        captured_text = st.session_state.captured_text
-                        # st.write(st.session_state.captured_text)
-                        if st.session_state.user_language_code == default_language:
-                            translated_message = captured_text
-                        else:
-                            translated_message = translate_text(
+                    if st.session_state.recording == False:
+                        if st.session_state.captured_text != "":
+                            translated_message = ""
+                            st.session_state.recording = False
+                            time.sleep(1)  # Allow the thread to finish properly
+                            captured_text = st.session_state.captured_text
+                            # st.write(st.session_state.captured_text)
+                            if st.session_state.user_language_code == default_language:
+                                translated_message = captured_text
+                            else:
+                                translated_message = translate_text(
+                                    captured_text,
+                                    src_lang=st.session_state.user_language_code,
+                                    tgt_lang=default_language,
+                                )
+                            add_message(
+                                room_name,
+                                st.session_state["logged_in_user"],
                                 captured_text,
-                                src_lang=st.session_state.user_language_code,
-                                tgt_lang=default_language,
+                                st.session_state.user_language_code,
+                                translated_message,
+                                default_language,
                             )
-                        add_message(
-                            room_name,
-                            st.session_state["logged_in_user"],
-                            captured_text,
-                            st.session_state.user_language_code,
-                            translated_message,
-                            default_language,
-                        )
 
                     message = st.sidebar.text_input("Send Message")
                     translated_message = ""

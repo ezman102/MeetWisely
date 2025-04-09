@@ -683,6 +683,7 @@ elif menu == "Chatroom":
                                 translated_message,
                                 default_language,
                             )
+                            show_message(captured_text)
 
                     message = st.sidebar.text_input("Send Message")
                     translated_message = ""

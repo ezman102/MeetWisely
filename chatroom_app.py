@@ -353,6 +353,9 @@ def show_message(chat_message):
     for message in chat_message:
         st.write(message)
 
+# format message - pass to summarizar
+def format_message_for_summarizer(user_name, message):
+    return user_name + " : " + message + "\n"
 
 # format message to a specific format - pass to deepseek for extract action item
 def format_message(user_name, message):
@@ -547,7 +550,7 @@ elif menu == "Chatroom":
                                         translated_lang,
                                         timestamp,
                                     ) in messages:
-                                        text += format_message(user, translated_msg)
+                                        text += format_message_for_summarizer(user, translated_msg)
                                     # st.session_state.is_loaded_chathistory = True
 
                                     # text = "Hello123"

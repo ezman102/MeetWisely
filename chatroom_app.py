@@ -6,11 +6,10 @@ import threading
 
 from modules.translator import translate_text
 
-from modules.stream_transcriber import stream_transcribe_live
-
-# from modules.summarizer import generate_summary
-from modules.summarizer_knkarthickAMI import generate_summary_knkarthickAMI
+from modules.summarizer import generate_summary
 from modules.ds_action_items import extract_action_items_with_deepseek
+
+st.set_page_config(page_title="Smart Meeting Assistant (Online)")
 
 default_language = "en"
 
@@ -353,18 +352,17 @@ def show_message(chat_message):
     for message in chat_message:
         st.write(message)
 
-# format message - pass to summarizar
-def format_message_for_summarizer(user_name, message):
+
+# format message to a specific format - pass to summarizar / deepseek for extract action item
+def format_message(user_name, message):
     return user_name + " : " + message + "\n"
 
-# format message to a specific format - pass to deepseek for extract action item
-def format_message(user_name, message):
-    return "[Speaker " + user_name + "]" + message + "\n"
 
 def start_recording():
     st.session_state.recording = True
     st.session_state.captured_text = ""
     listen_in_background(st.session_state.user_language_code)
+
 
 def stop_recording():
     st.session_state.recording = False
@@ -399,10 +397,16 @@ def listen_in_background(language_code):
         while st.session_state.recording:
             try:
                 audio_data = recognizer.listen(source, timeout=5, phrase_time_limit=10)
-                print("Debug-selected language", get_recognize_google_language_code(language_code))
-                text = recognizer.recognize_google(audio_data, language=get_recognize_google_language_code(language_code))
+                print(
+                    "Debug-selected language",
+                    get_recognize_google_language_code(language_code),
+                )
+                text = recognizer.recognize_google(
+                    audio_data,
+                    language=get_recognize_google_language_code(language_code),
+                )
                 st.session_state.captured_text += text + " "
-                #"en-US"
+                # "en-US"
                 print("Debug-listen_in_background", text)
             except sr.UnknownValueError:
                 st.warning("Listening... (Could not understand)")
@@ -505,8 +509,8 @@ elif menu == "Chatroom":
 
                 # owner of the chatroom can end meeting, generate summary, and, extract action item
                 if chatrooms_owner == st.session_state["logged_in_user"]:
-                    if st.sidebar.button("▶️ End Meeting"):
-                        message = "End Meeting"
+                    if st.sidebar.button("🔚 End Meeting"):
+                        message = "Meeting Ended"
                         if default_language != st.session_state.user_language_code:
                             translated_msg = translate_text(
                                 message,
@@ -550,20 +554,15 @@ elif menu == "Chatroom":
                                         translated_lang,
                                         timestamp,
                                     ) in messages:
-                                        text += format_message_for_summarizer(user, translated_msg)
-                                    # st.session_state.is_loaded_chathistory = True
-
-                                    # text = "Hello123"
-                                    # summary = text
-                                    # summary = generate_summary(text)
-                                    summary = generate_summary_knkarthickAMI(text)
+                                        text += format_message(user, translated_msg)
+                                    summary = generate_summary(text)
                                     print("Debug: summary content- ", text)
 
                                 update_chatroom_summary(
                                     room_name, default_language, summary
                                 )
                         elif app_mode == "Action Items (DeepSeek)":
-                            if st.sidebar.button("🐋 DeepSeek Action Item Extraction"):
+                            if st.sidebar.button("🐋 Extract with DeepSeek"):
                                 with st.spinner(
                                     "Analyzing transcript with DeepSeek..."
                                 ):
@@ -578,9 +577,6 @@ elif menu == "Chatroom":
                                         timestamp,
                                     ) in messages:
                                         text += format_message(user, translated_msg)
-                                    # st.session_state.is_loaded_chathistory = True
-                                    # text = "Hello123"
-                                    # full_text = "Hello456"
                                     full_text = extract_action_items_with_deepseek(text)
                                 update_chatroom_action_item(
                                     room_name, default_language, full_text
@@ -593,7 +589,6 @@ elif menu == "Chatroom":
                         chatroom_summary["summary"]
                         and chatroom_summary["summary"].strip()
                     ):
-                        st.subheader("📝 Summary")
                         display_content = chatroom_summary["summary"]
                         if (
                             chatroom_summary["languages"]
@@ -605,6 +600,19 @@ elif menu == "Chatroom":
                                 tgt_lang=st.session_state.user_language_code,
                             )
 
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.subheader("📝 Summary")
+                        with col2:
+                            filename = "assets/Summary.txt"
+                            with open(filename, "w", encoding="utf-8") as f:
+                                f.write(display_content)
+                            with open(filename, "r", encoding="utf-8") as f:
+                                st.download_button(
+                                    "⬇️ Summary",
+                                    f,
+                                    file_name="Summary.txt",
+                                )
                         st.write(display_content)
                     if (
                         chatroom_summary["action_item"]
@@ -620,15 +628,26 @@ elif menu == "Chatroom":
                                 src_lang=chatroom_summary["languages"],
                                 tgt_lang=st.session_state.user_language_code,
                             )
-
-                        st.subheader("📋 Action Items")
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.subheader("📋 Download Action Items")
+                        with col2:
+                            filename = "assets/ActionItems.txt"
+                            with open(filename, "w", encoding="utf-8") as f:
+                                f.write(display_content)
+                            with open(filename, "r", encoding="utf-8") as f:
+                                st.download_button(
+                                    "⬇️ Action Items",
+                                    f,
+                                    file_name="ActionItems.txt",
+                                )
                         st.write(display_content)
 
-                st.subheader("Chat Messages")
                 # load chat history
-                if st.session_state.chatrooms_is_active == False:
-                    show_message(st.session_state.messages)
-                if st.session_state.keep_refresh_msg == False:
+                if (
+                    st.session_state.keep_refresh_msg == False
+                    or not st.session_state.messages
+                ):
                     messages = get_messages(room_name)
                     for (
                         user,
@@ -654,7 +673,25 @@ elif menu == "Chatroom":
                             f"{timestamp} - {user}: {display_msg}"
                         )
                         st.session_state.current_time_stamp = timestamp
-                    show_message(st.session_state.messages)
+
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.subheader("Chat Messages")
+                with col2:
+                    filename = "assets/ChatMessage.txt"
+                    with open(filename, "w", encoding="utf-8") as f:
+                        display_content = ""
+                        for content in st.session_state.messages:
+                            display_content += content + "\n"
+                        f.write(display_content)
+                    with open(filename, "r", encoding="utf-8") as f:
+                        st.download_button(
+                            "⬇️ Chat Message",
+                            f,
+                            file_name="ChatMessage.txt",
+                        )
+
+                show_message(st.session_state.messages)
 
                 st.session_state.keep_refresh_msg = True
                 # if chatroom doesn't closed by owner, user can send message

@@ -397,17 +397,14 @@ def listen_in_background(language_code):
         while st.session_state.recording:
             try:
                 audio_data = recognizer.listen(source, timeout=5, phrase_time_limit=10)
-                print(
-                    "Debug-selected language",
-                    get_recognize_google_language_code(language_code),
-                )
+                # print("Debug-selected language",get_recognize_google_language_code(language_code),)
                 text = recognizer.recognize_google(
                     audio_data,
                     language=get_recognize_google_language_code(language_code),
                 )
                 st.session_state.captured_text += text + " "
                 # "en-US"
-                print("Debug-listen_in_background", text)
+                # print("Debug-listen_in_background", text)
             except sr.UnknownValueError:
                 st.warning("Listening... (Could not understand)")
             except sr.RequestError:
@@ -459,7 +456,7 @@ elif menu == "Login":
         user = login_user(username, password)
         if user:
             st.session_state.user_language_code = user["language"]
-            print(st.session_state.user_language_code)
+            # print(st.session_state.user_language_code)
             st.session_state["logged_in_user"] = username
             st.success(f"Welcome, {username}!")
         else:
@@ -556,7 +553,7 @@ elif menu == "Chatroom":
                                     ) in messages:
                                         text += format_message(user, translated_msg)
                                     summary = generate_summary(text)
-                                    print("Debug: summary content- ", text)
+                                    # print("Debug: summary content- ", text)
 
                                 update_chatroom_summary(
                                     room_name, default_language, summary
@@ -583,7 +580,7 @@ elif menu == "Chatroom":
                                 )
 
                 chatroom_summary = get_chatroom_summary(room_name)
-                print(chatroom_summary)
+                # print(chatroom_summary)
                 if chatroom_summary is not None:
                     if (
                         chatroom_summary["summary"]
@@ -644,9 +641,8 @@ elif menu == "Chatroom":
                         st.write(display_content)
 
                 # load chat history
-                if (
-                    st.session_state.keep_refresh_msg == False
-                    or not st.session_state.messages
+                if (st.session_state.keep_refresh_msg == False) or (
+                    not st.session_state.messages
                 ):
                     messages = get_messages(room_name)
                     for (
@@ -690,8 +686,10 @@ elif menu == "Chatroom":
                             f,
                             file_name="ChatMessage.txt",
                         )
-
-                show_message(st.session_state.messages)
+                if (st.session_state.chatrooms_is_active == False) or (
+                    st.session_state.keep_refresh_msg == False
+                ):
+                    show_message(st.session_state.messages)
 
                 st.session_state.keep_refresh_msg = True
                 # if chatroom doesn't closed by owner, user can send message
@@ -739,15 +737,15 @@ elif menu == "Chatroom":
                                     src_lang=st.session_state.user_language_code,
                                     tgt_lang=default_language,
                                 )
-                            print(
-                                "Add debug message",
-                                room_name,
-                                st.session_state["logged_in_user"],
-                                message,
-                                st.session_state.user_language_code,
-                                translated_message,
-                                default_language,
-                            )
+                            # print(
+                            #     "Add debug message",
+                            #     room_name,
+                            #     st.session_state["logged_in_user"],
+                            #     message,
+                            #     st.session_state.user_language_code,
+                            #     translated_message,
+                            #     default_language,
+                            # )
                             add_message(
                                 room_name,
                                 st.session_state["logged_in_user"],
@@ -787,13 +785,13 @@ elif menu == "Chatroom":
                                 f"{timestamp} - {user}: {display_msg}"
                             )
                             st.write(f"{timestamp} - {user}: {display_msg}")
-                            print(
-                                "debug463",
-                                timestamp,
-                                user,
-                                display_msg,
-                                st.session_state.keep_refresh_msg,
-                            )
+                            # print(
+                            #     "debug463",
+                            #     timestamp,
+                            #     user,
+                            #     display_msg,
+                            #     st.session_state.keep_refresh_msg,
+                            # )
                             st.session_state.current_time_stamp = timestamp
                             have_new_message = True
                         # if have_new_message:

@@ -21,15 +21,14 @@ def extract_action_items_with_deepseek(transcript_lines):
     transcript_text = "\n".join(transcript_lines)
 
     prompt = f"""
-You are a smart AI meeting assistant. Extract action items from the following transcript.
-Each action item should include:
-- The speaker
-- The task
-- The due date (if mentioned)
+You are a smart AI meeting assistant. Read the following transcript and extract action items.
+Group the action items by speaker. For each speaker, list the tasks they committed to, along with due dates if available.
 
 Format:
-- Speaker: [Name]
-  Task: [Action they committed to]
+Speaker: [Name]
+- Task: [What they will do]
+  Due: [Due date if mentioned]
+- Task: [Another task]
   Due: [Due date if mentioned]
 
 Transcript:
@@ -37,13 +36,15 @@ Transcript:
 {transcript_text}
 \"\"\"
 
-Action Items:
+Grouped Action Items:
 """
 
-    result = generator(prompt, max_new_tokens=256, do_sample=False)
+    result = generator(prompt, max_new_tokens=512, do_sample=False)
     output = result[0]['generated_text']
 
-    if "Action Items:" in output:
-        output = output.split("Action Items:")[-1].strip()
+    # Extract content after "Grouped Action Items:"
+    if "Grouped Action Items:" in output:
+        output = output.split("Grouped Action Items:")[-1].strip()
 
     return output
+

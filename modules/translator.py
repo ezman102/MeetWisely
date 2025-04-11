@@ -1,6 +1,5 @@
 from transformers import MarianMTModel, MarianTokenizer
 
-# Dynamically load model based on language pair
 def load_translation_model(src_lang="en", tgt_lang="fr"):
     model_name = f"Helsinki-NLP/opus-mt-{src_lang}-{tgt_lang}"
     tokenizer = MarianTokenizer.from_pretrained(model_name)

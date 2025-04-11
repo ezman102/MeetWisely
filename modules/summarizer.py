@@ -1,18 +1,28 @@
-from transformers import pipeline, AutoTokenizer, AutoModelForSeq2SeqLM
+# modules/summarizer.py
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
 
-def load_local_summarizer(model_dir="models/bart-large-cnn"):
-    tokenizer = AutoTokenizer.from_pretrained(model_dir)
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
-    return pipeline("summarization", model=model, tokenizer=tokenizer)
+def load_meeting_summarizer():
+    model_name = "knkarthick/MEETING_SUMMARY"
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+    return tokenizer, model
 
-summarizer = load_local_summarizer()
+tokenizer, model = load_meeting_summarizer()
 
-def generate_summary(transcript_text, max_words=150):
-    # Truncate or chunk if text too long
-    max_input_len = 1024  # BART token limit
+def generate_summary(text):
+    inputs = tokenizer([text], return_tensors="pt", truncation=True, max_length=1024)
+    with torch.no_grad():
+        summary_ids = model.generate(
+            inputs["input_ids"],
+            max_length=256,
+            min_length=50,
+            length_penalty=2.0,
+            num_beams=4,
+            early_stopping=True
+        )
+    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+    return summary
 
-    if len(transcript_text.split()) > max_input_len:
-        transcript_text = " ".join(transcript_text.split()[:max_input_len])
-
-    result = summarizer(transcript_text, max_length=max_words, min_length=30, do_sample=False)
-    return result[0]['summary_text']
+def clean_transcript(transcript_lines):
+    return " ".join(line.split("]")[-1].strip() for line in transcript_lines)

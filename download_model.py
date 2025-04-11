@@ -1,4 +1,3 @@
-# download_model.py
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 model_id = "facebook/bart-large-cnn"

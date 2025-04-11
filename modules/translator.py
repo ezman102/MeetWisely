@@ -1,3 +1,4 @@
+# modules/translator.py
 from transformers import MarianMTModel, MarianTokenizer
 
 def load_translation_model(src_lang="en", tgt_lang="fr"):

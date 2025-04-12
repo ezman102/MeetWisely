@@ -1,0 +1,65 @@
+=== Original ===
+[Speaker 1] Thanks everyone for joining the quarterly review. Let's start with metrics.
+[Speaker 2] User retention improved by 12%, churn dropped by 3% in Q2.
+[Speaker 3] Marketing spent was 10% under budget. Highest ROI from the LinkedIn campaign.
+[Speaker 4] Engineering velocity increased after switching to two week sprints.
+[Speaker 1] That's promising. Let’s replicate that velocity across teams.
+[Speaker 3] One blocker, test automation is still manual.
+[Speaker 2] We can pilot playwright tests for the web stack.
+[Speaker 4] I'll lead the automation pilot with QA team next week.
+[Speaker 1] For strategy, we plan to expand into the education sector.
+[Speaker 2] Agreed. I'll analyze market entry strategies and share by next Monday.
+[Speaker 3] We'll need a landing page mock-up for that segment.
+[Speaker 4] I'll coordinate with design to prepare mock-ups.
+
+=== Transcript ===
+[Speaker 1] Thanks everyone for joining the quarterly review. Let's start with metrics.
+[Speaker 2] User retention improved by 12%, churn dropped by 3% in Q2.
+[Speaker 3] Marketing spent was 10% under budget. Highest ROI from the LinkedIn campaign.
+[Speaker 4] Engineering velocity increased after switching to two weeks' brints.
+[Speaker 1] That's promising. Let's replicate that velocity across teams.
+[Speaker 3] One blocker, test automation is still manual.
+[Speaker 2] We can pilot playwright tests for the web stack.
+[Speaker 4] I'll lead the automation pilot with Q18 next week.
+[Speaker 1] For strategy, we plan to expand into the education sector.
+[Speaker 2] Agreed. I'll analyze market entry strategies and share by next Monday.
+[Speaker 3] We'll need a landing page mock-up for that segment.
+[Speaker 4] I'll coordinate with design to prepare mock-ups.
+
+=== Summary ===
+In the quarterly review, speakers discuss the performance of the business, strategy and technical matters. 
+They also discuss how to improve the quality of life of users and increase the efficiency of the marketing campaign. 
+They plan to expand into the education sector and prepare a landing page mock-up.
+
+=== Translation (French) ===
+[Speaker 1] Merci à tous d'avoir participé à l'examen trimestriel. Commençons par les mesures. 
+[Speaker 2] La rétention de l'utilisateur s'est améliorée de 12 %, le churn a chuté de 3 % au Q2. 
+[Speaker 3] Le marketing a été dépensé de 10 % sous budget. Le plus haut ROI de la campagne LinkedIn. 
+[Speaker 4] La vitesse de l'ingénierie a augmenté après le passage à deux semaines de brins. 
+[Speaker 1] C'est prometteur. Répliquons cette vitesse entre les équipes. 
+[Speaker 3] Un bloqueur, l'automatisation des tests est toujours manuelle. 
+[Speaker 2] Nous pouvons piloter des tests de dramaturge pour la pile web. 
+[Speaker 4] Je dirigerai le pilote d'automatisation avec Q18 la semaine prochaine. 
+[Speaker 1] Pour la stratégie, nous prévoyons de nous étendre au secteur de l'éducation. 
+[Speaker 2] Accepté. Je vais analyser les stratégies d'entrée sur le marché et partager d'ici lundi. 
+[Speaker 3] Nous allons rejoindre une maquette de page d'atterrissage pour ce segment. 
+[Speaker 4] Je vais coordonner avec la conception pour préparer des maquettes.
+
+=== Action Items ===
+Speaker 1:
+- Task: Ensure teams replicate engineering velocity
+- Task: Coordinate strategy expansion into education sector
+
+Speaker 2:
+- Task: Analyze market entry strategies for education sector
+- Task: Share findings by next Monday
+
+Speaker 3:
+- Task: Mention blocker of manual test automation
+- Task: Coordinate pilot of playwright tests with Q18
+
+Speaker 4:
+- Task: Coordinate with design for education sector landing page mock-ups
+- Task: Attend next meeting
+
+Note: Due dates are not mentioned in the transcript, so they are not included in the action items.

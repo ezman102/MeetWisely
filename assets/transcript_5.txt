@@ -1,0 +1,13 @@
+[Speaker 1] Thanks for joining. Let's sync on the release blockers. First, mobile crashes on login.
+[Speaker 2] Yes, we traced it to a null token on Android. A patch is ready and will be deployed tonight.
+[Speaker 3] I'll verify it on staging and flag if anything fails.
+[Speaker 4] On iOS, we had an auth redirect bug, fixed and in review.
+[Speaker 1] Excellent. Now, what about the new onboarding flow?
+[Speaker 2] Copy updates are finalized. Waiting on final graphics from design.
+[Speaker 3] Design assets will be shared by EOD.
+[Speaker 4] Do we plan to A-B test it before full rollout?
+[Speaker 1] Yes, let's do a 50-50 split starting next Monday.
+[Speaker 2] Got it. I'll prep the experiment config and send it for QA.
+[Speaker 3] Marketing also asked for early access. Should we whitelist them?
+[Speaker 4] Makes sense. I'll handle that from back end.
+[Speaker 1] Great. Let's aim to close all items by this Friday.

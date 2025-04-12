@@ -1,0 +1,7 @@
+[Speaker 1] Welcome everyone. Let's finalize the specs for the Q3 release.
+[Speaker 2] For the chat feature, I propose we use WebSockets for real-time updates.
+[Speaker 3] Makes sense. I'll start drafting the architecture doc today.
+[Speaker 4] I suggest we include emoji reactions in the first version.
+[Speaker 1] Good idea. Can someone also look into analytics tracking?
+[Speaker 2] I'll take it. Should be done by next sprint.
+[Speaker 3] I'll send out a draft by Friday for review.

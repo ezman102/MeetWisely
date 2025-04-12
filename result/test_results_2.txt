@@ -1,0 +1,41 @@
+=== Original ===
+[Speaker 1] Morning team. Quick update. Backend service deployment is complete.
+[Speaker 2] Thanks. The frontend integration is ongoing. ETA tomorrow noon.
+[Speaker 3] I'll handle regression testing once it's merged.
+[Speaker 1] Great. Let's aim to close this ticket by EOD tomorrow.
+
+=== Transcript ===
+[Speaker 1] Morning team. Quick update. Backend service deployment is complete.
+[Speaker 2] Thanks. The frontend integration is ongoing. ETA tomorrow noon.
+[Speaker 3] I'll handle regression testing once it's merged.
+[Speaker 1] Great. Let's aim to close this ticket by EOD tomorrow.
+
+=== Summary ===
+The backend service deployment is complete. 
+The frontend integration is ongoing. 
+Speaker 1 will handle regression testing once it's merged. 
+The target is to close the ticket by EOD tomorrow at noon.
+
+=== Translation (French) ===
+[Speaker 1] Équipe du matin. Mise à jour rapide. Déploiement du service de backend est terminé. 
+[Speaker 2] Merci. L'intégration de frontend est en cours. ETA demain midi. 
+[Speaker 3] Je gérerai les tests de régression une fois qu'il aura fusionné. 
+[Speaker 1] Super.
+
+=== Action Items ===
+Speaker 1:
+- Deploy backend service
+- Close ticket by EOD tomorrow
+
+Speaker 2:
+- Integrate frontend
+- ETA: Tomorrow noon
+
+Speaker 3:
+- Handle regression testing
+
+Action Items:
+- Deploy backend service: Speaker 1
+- Integrate frontend: Speaker 2
+- Handle regression testing: Speaker 3
+- Close ticket by EOD tomorrow: Speaker 1

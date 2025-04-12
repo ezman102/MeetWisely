@@ -1,0 +1,73 @@
+=== Original ===
+[Speaker 1] Thanks for joining. Let's sync on the release blockers. First, mobile crashes on login.
+[Speaker 2] Yes, we traced it to a null token on Android. A patch is ready and will be deployed tonight.
+[Speaker 3] I'll verify it on staging and flag if anything fails.
+[Speaker 4] On iOS, we had an auth redirect bug, fixed and in review.
+[Speaker 1] Excellent. Now, what about the new onboarding flow?
+[Speaker 2] Copy updates are finalized. Waiting on final graphics from design.
+[Speaker 3] Design assets will be shared by EOD.
+[Speaker 4] Do we plan to A-B test it before full rollout?
+[Speaker 1] Yes, let's do a 50-50 split starting next Monday.
+[Speaker 2] Got it. I'll prep the experiment config and send it for QA.
+[Speaker 3] Marketing also asked for early access. Should we whitelist them?
+[Speaker 4] Makes sense. I'll handle that from back end.
+[Speaker 1] Great. Let's aim to close all items by this Friday.
+
+=== Transcript ===
+[Speaker 1] Thanks for joining. Let's sync on the release blockers. First, mobile crashes on login.
+[Speaker 2] Yes, we traced it to an all token on Android. A patch is ready and will be deployed tonight.
+[Speaker 3] I'll verify it on staging and flag if anything fails.
+[Speaker 4] On iOS, we had an all three direct bug, fixed and in review.
+[Speaker 1] Excellent. Now, what about the new onboarding flow?
+[Speaker 2] Copy updates are finalized. Waiting on final graphics from design.
+[Speaker 3] Design assets will be shared by EOD.
+[Speaker 4] Do we plan to A-B test it before 4-row-out?
+[Speaker 1] Yes, let's do a 50-50 split starting next Monday.
+[Speaker 2] Got it. I'll prep the experiment config and send it for QA.
+[Speaker 3] Marketing also asked for early access. Should we whitelist them?
+[Speaker 4] Makes sense. I'll handle that from back end.
+[Speaker 1] Great. Let's aim to close all items by this Friday.
+
+=== Summary ===
+There was a crash on login on Android. A patch is ready and will be deployed tonight. 
+On iOS, there were three direct bugs, fixed. The new onboarding flow is finalized. Design assets will be shared by EOD. 
+Marketing asked for early access. Speaker 1 will prepare the experiment config and send it for QA. 
+The goal is to close all items by this Friday.
+
+=== Translation (French) ===
+[Speaker 1] Merci de nous joindre. Synchronisons sur les bloqueurs de version. D'abord, le mobile s'écrase sur la connexion. 
+[Speaker 2] Oui, nous l'avons tracé sur un jeton tout à fait sur Android. Un patch est prêt et sera déployé ce soir. 
+[Speaker 3] Je le vérifierai sur la mise en scène et le drapeau si quelque chose échoue. 
+[Speaker 4] Sur iOS, nous avons eu un bug direct, corrigé et en revue. 
+[Speaker 1] Excellent. Maintenant, qu'en est-il du nouveau flux d'embarquement? 
+[Speaker 2] Les mises à jour de copie sont finalisées. Attendons sur les graphiques finaux de la conception. 
+[Speaker 3] Les actifs de conception seront partagés par EOD. 
+[Speaker 4] Préparons-nous de le tester A-B avant 4 lignes? 
+[Speaker 1] Oui, faisons un 50-50 fractionnement à partir de lundi prochain. 
+[Speaker 2] Obtenu.
+
+=== Action Items ===
+[Speaker 1]
+- Sync on release blockers
+- New onboarding flow: A-B test starting next Monday
+- Close all items by this Friday
+
+[Speaker 2]
+- Fix Android all token issue
+- Deploy patch tonight
+- Verify staging
+- Flag if anything fails
+- Finalize copy updates
+- Wait for final graphics from design
+- Prep experiment config and send for QA
+
+[Speaker 3]
+- Verify design assets by EOD
+- Share design assets with Speaker 2
+- Handle marketing early access request from back end
+
+[Speaker 4]
+- Fixed iOS all three direct bug
+- In review
+- Plan to A-B test new onboarding flow
+- Handle early access request from marketing

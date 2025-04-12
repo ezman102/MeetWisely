@@ -1,0 +1,12 @@
+[Speaker 1] Thanks everyone for joining the quarterly review. Let's start with metrics.
+[Speaker 2] User retention improved by 12%, churn dropped by 3% in Q2.
+[Speaker 3] Marketing spent was 10% under budget. Highest ROI from the LinkedIn campaign.
+[Speaker 4] Engineering velocity increased after switching to two week sprints.
+[Speaker 1] That's promising. Let's replicate that velocity across teams.
+[Speaker 3] One blocker, test automation is still manual.
+[Speaker 2] We can pilot playwright tests for the web stack.
+[Speaker 4] I'll lead the automation pilot with QA team next week.
+[Speaker 1] For strategy, we plan to expand into the education sector.
+[Speaker 2] Agreed. I'll analyze market entry strategies and share by next Monday.
+[Speaker 3] We'll need a landing page mock-up for that segment.
+[Speaker 4] I'll coordinate with design to prepare mock-ups.

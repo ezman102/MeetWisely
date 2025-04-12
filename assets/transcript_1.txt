@@ -1,9 +1,9 @@
 [Speaker 1] Good morning, everyone. Let's get started with today's meeting.
 [Speaker 2] Sure. The mobile team has completed the login feature.
-[Speaker 3] I’ll test it and provide feedback by Wednesday.
+[Speaker 3] I'll test it and provide feedback by Wednesday.
 [Speaker 1] Great. We also need to finalize the budget proposal.
 [Speaker 2] I can coordinate with finance and draft the document.
 [Speaker 3] Please include the updated cost projections.
-[Speaker 2] Noted. I’ll send a draft by Friday.
-[Speaker 1] Also, don’t forget to schedule the stakeholder presentation.
-[Speaker 3] I’ll book a slot for next Monday.
+[Speaker 2] Noted. I'll send a draft by Friday.
+[Speaker 1] Also, don't forget to schedule the stakeholder presentation.
+[Speaker 3] I'll book a slot for next Monday.

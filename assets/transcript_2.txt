@@ -1,0 +1,4 @@
+[Speaker 1] Morning team. Quick update: backend service deployment is complete.
+[Speaker 2] Thanks. The frontend integration is ongoing. ETA tomorrow noon.
+[Speaker 3] I'll handle regression testing once it's merged.
+[Speaker 1] Great. Let’s aim to close this ticket by EOD tomorrow.

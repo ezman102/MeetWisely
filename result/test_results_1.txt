@@ -1,0 +1,54 @@
+=== Original ===
+[Speaker 1] Good morning, everyone. Let's get started with today's meeting.
+[Speaker 2] Sure. The mobile team has completed the login feature.
+[Speaker 3] I’ll test it and provide feedback by Wednesday.
+[Speaker 1] Great. We also need to finalize the budget proposal.
+[Speaker 2] I can coordinate with finance and draft the document.
+[Speaker 3] Please include the updated cost projections.
+[Speaker 2] Noted. I’ll send a draft by Friday.
+[Speaker 1] Also, don’t forget to schedule the stakeholder presentation.
+[Speaker 3] I’ll book a slot for next Monday.
+
+=== Transcript ===
+[Speaker 1] Good morning, everyone. Let's get started with today's meeting.
+[Speaker 2] Sure. The mobile team has completed the login feature.
+[Speaker 3] I'll test it and provide feedback by Wednesday.
+[Speaker 4] Great. We also need to finalize the budget proposal.
+[Speaker 2] I can coordinate with finance and draft the document.
+[Speaker 3] Please include the updated cost projections.
+[Speaker 2] Noted. I'll send a draft by Friday.
+[Speaker 1] Also, don't forget to schedule the stakeholder presentation.
+[Speaker 3] I'll book a slot for next Monday.
+
+=== Summary ===
+The mobile team has completed the login feature. 
+Speaker 3 will test it and provide feedback by Wednesday. 
+Speaker 1 will finalize the budget proposal and send it by Friday. 
+Speaker 2 will send the draft and schedule the stakeholder presentation for next Monday.
+
+=== Translation (French) ===
+[Speaker 1] Bonjour, tout le monde. Commençons par la réunion d'aujourd'hui. 
+[Speaker 2] Bien sûr. L'équipe mobile a terminé la fonction de connexion. 
+[Speaker 3] I=ll teste et fournit des commentaires d'ici mercredi. 
+[Speaker 1] Super. Nous devons également finaliser le projet de budget. 
+[Speaker 2] Je peux coordonner avec la finance et rédiger le document. 
+[Speaker 3] Veuillez inclure les projections de coûts mises à jour. 
+[Speaker 2] Noté. I=ll envoyer un projet d'ici vendredi. 
+[Speaker 1] Aussi, n'oubliez pas de programmer la présentation des intervenants. 
+[Speaker 3] I=ll réservera un créneau pour lundi prochain.
+
+=== Action Items ===
+Speaker 1:
+- Finalize budget proposal
+- Schedule stakeholder presentation
+
+Speaker 2:
+- Draft budget proposal
+- Include updated cost projections
+
+Speaker 3:
+- Test mobile team's login feature
+- Provide feedback by Wednesday
+- Schedule stakeholder presentation
+- Book a slot for next Monday
+

@@ -44,7 +44,10 @@ The goal is to close all items by this Friday.
 [Speaker 3] Les actifs de conception seront partagés par EOD. 
 [Speaker 4] Préparons-nous de le tester A-B avant 4 lignes? 
 [Speaker 1] Oui, faisons un 50-50 fractionnement à partir de lundi prochain. 
-[Speaker 2] Obtenu.
+[Speaker 2] Je vais préparer la config d'expérience et l'envoyer pour QA. 
+[Speaker 3] Marketing a également demandé un accès précoce. Devrions-nous les lister? 
+[Speaker 4] C'est logique. Je vais gérer cela de l'arrière-plan. 
+[Speaker 1] Super. Essayons de fermer tous les articles d'ici ce vendredi.
 
 === Action Items ===
 [Speaker 1]

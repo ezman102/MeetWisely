@@ -17,10 +17,19 @@
 [Speaker 3] I'll send out a draft by Friday for review.
 
 === Summary ===
-Speaker 1 proposes to use WebSockets for real-time updates. Speaker 2 proposes to introduce analytics tracking. Speaker 3 proposes to include emoji reactions in the first version. Speaker 1 will draft the architecture doc today and send it to Speaker 3 by Friday for review.
+Speaker 1 proposes to use WebSockets for real-time updates. 
+Speaker 2 proposes to introduce analytics tracking. 
+Speaker 3 proposes to include emoji reactions in the first version.
+Speaker 1 will draft the architecture doc today and send it to Speaker 3 by Friday for review.
 
 === Translation (French) ===
-[Speaker 1] Accueillons tout le monde. Finalisons les spécifications pour la version Q3. [Speaker 2] Pour la fonctionnalité de chat, je propose d'utiliser WebSockets pour les mises à jour en temps réel. [Speaker 3] C'est logique. Je vais commencer à rédiger le document d'architecture aujourd'hui. [Speaker 3] Je suggère d'inclure les réactions emoji dans la première version. [Speaker 1] Bonne idée. Quelqu'un peut aussi regarder le suivi analytique? [Speaker 2] Je vais le prendre.
+[Speaker 1] Accueillons tout le monde. Finalisons les spécifications pour la version Q3. 
+[Speaker 2] Pour la fonctionnalité de chat, je propose d'utiliser WebSockets pour les mises à jour en temps réel. 
+[Speaker 3] C'est logique. Je vais commencer à rédiger le document d'architecture aujourd'hui. 
+[Speaker 3] Je suggère d'inclure les réactions emoji dans la première version. 
+[Speaker 1] Bonne idée. Quelqu'un peut aussi regarder le suivi analytique? 
+[Speaker 2] Je vais le prendre. Ça devrait être fait d'ici le prochain sprint.
+[Speaker 3] J'enverrai un projet d'ici vendredi pour examen.
 
 === Action Items ===
 Speaker 1:

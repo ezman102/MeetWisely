@@ -59,7 +59,7 @@ HF_TOKEN=your_token_here
 #### 2.1 Launch In-preson meeting
 
 ```bash
-streamlit run app.py
+streamlit run local_app.py
 ```
 
 #### 2.2 Launch Online meeting
@@ -92,8 +92,8 @@ Summary:
 
 ```
 .
-├── app.py                    # Main Streamlit application (In-person meeting)
-├── chatroom_app.py           # Main Streamlit application (Online meeting)
+├── local_app.py                    # Main Streamlit application (In-person meeting)
+├── online_app.py           # Main Streamlit application (Online meeting)
 ├── assets/                   # Temp audio and transcript files
 ├── modules/
 │   ├── stream_transcriber.py # Real-time transcription + diarization

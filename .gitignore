@@ -20,7 +20,6 @@ desktop.ini
 
 # === Audio files and chunks ===
 assets/temp_chunks/
-assets/*.wav
 assets/*.mp3
 assets/*.ogg
 

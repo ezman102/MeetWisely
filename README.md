@@ -65,7 +65,7 @@ streamlit run local_app.py
 #### 2.2 Launch Online meeting
 
 ```bash
-streamlit run chatroom_app.py
+streamlit run online_app.py
 ```
 
 ### 3. Functional Tabs

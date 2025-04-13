@@ -24,10 +24,6 @@ app_mode = st.sidebar.radio("Choose an option:", [
 ])
 
 
-if uploaded_file:
-    st.sidebar.markdown("📝 **Transcript Preview:**")
-    st.sidebar.text_area("Transcript", value=transcript_text[:1000], height=200)
-
 # Session state
 if "is_recording" not in st.session_state:
     st.session_state.is_recording = False
@@ -120,7 +116,7 @@ elif app_mode == "Summarize Transcript":
     st.markdown("Generate a concise summary of the meeting from the transcript using AI.")
 
     if st.session_state.transcript:
-        st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200)
+        st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200, key="summarize_transcript_area")
         if st.button("🧠 Generate Summary"):
             with st.spinner("Summarizing..."):
                 text = "\n".join(st.session_state.transcript)
@@ -145,7 +141,7 @@ elif app_mode == "Translate Transcript":
     }
 
     if st.session_state.transcript:
-        st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200)
+        st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200, key="translate_transcript_area")
 
         target_lang = st.selectbox("Select target language:", list(supported_languages.keys()))
         if st.button("🌍 Translate"):
@@ -160,7 +156,7 @@ elif app_mode == "Translate Transcript":
 elif app_mode == "Action Items (DeepSeek)":
     st.header("🐋 DeepSeek Action Item Extraction")
     st.markdown("Automatically extract actionable items and tasks from your meeting transcript.")
-    st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200)
+    st.text_area("Transcript", value="\n".join(st.session_state.transcript), height=200, key="action_items_transcript_area")
     if st.session_state.transcript:
         if st.button("🐋 Extract with DeepSeek"):
             with st.spinner("Analyzing transcript with DeepSeek..."):
